@@ -3,7 +3,7 @@ let num2 = null;
 let operator = null;
 
 
-
+// four basic operations
 function add (a, b) {
     return a + b;
 }
@@ -20,6 +20,7 @@ function divide (a, b) {
     return a / b;
 }
 
+// function to call correct operation
 function operate(a, b, op) {
     switch (op) {
         case '+':
@@ -34,3 +35,24 @@ function operate(a, b, op) {
             throw new Error("Invalid operator");
     }
 }
+// get display and the digits buttons
+const display = document.querySelector(".display");
+const digitButtons = document.querySelectorAll(".digit");
+let currentInput = "";
+
+// function to update display when user click on digits
+function updateDisplay(digit){
+    currentInput += digit;
+    display.textContent = currentInput;
+
+}
+
+// add event listener to get digit
+digitButtons.forEach(button => {
+    button.addEventListener("click", () =>{
+        updateDisplay(button.textContent);
+        console.log(currentInput);
+    });
+});
+
+console.log(digitButtons);
