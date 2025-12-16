@@ -58,13 +58,42 @@ digitButtons.forEach(button => {
 // get the operator buttons
 const operatorButtons = document.querySelectorAll(".operator");
 
-// event listener to get the operator
+// event listener to get the operator, ensuring that calculator should not evaluate more than a single pair of numbers at a single time
+// 12 + 7 - 1 = 12 + 7 = 19 - 1 = 18
 operatorButtons.forEach(button => {
     button.addEventListener("click", () =>{
-        num1 = parseInt(currentInput);
-        operator = button.textContent;
-        currentInput = "";
-        display.textContent = `${num1} ${operator}`;
-        console.log(button.textContent);
+        if (operator !== null && currentInput !== ""){
+            num2 = parseInt(currentInput);
+            const result = operate(num1, num2, operator);
+            display.textContent = result;
+            num1 = result;
+            operator = button.textContent;
+            currentInput = "";
+        }
+        else{
+            num1 = parseInt(currentInput);
+            operator = button.textContent;
+            currentInput = "";
+            console.log(button.textContent);
+        }
     })
+});
+
+// get equal and clear buttons
+const equalButton = document.getElementById('equal');
+const clearButton = document.getElementById('clear');
+
+equalButton.addEventListener("click", () => {
+    num2 = parseInt(currentInput);
+    const result = operate(num1, num2, operator);
+    display.textContent = result;
+    currentInput = result;
+})
+
+clearButton.addEventListener("click", () => {
+    num1 = null;
+    num2 = null;
+    operator = null;
+    currentInput = "";
+    display.textContent = "";
 })
