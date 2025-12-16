@@ -36,8 +36,8 @@ function operate(a, b, op) {
     }
 }
 // get display and the digits buttons
-const display = document.querySelector(".display");
-const digitButtons = document.querySelectorAll(".digit");
+const display = document.querySelector(".display"); // get display
+const digitButtons = document.querySelectorAll(".digit"); // get digit buttons
 let currentInput = "";
 
 // function to update display when user click on digits
@@ -55,4 +55,16 @@ digitButtons.forEach(button => {
     });
 });
 
-console.log(digitButtons);
+// get the operator buttons
+const operatorButtons = document.querySelectorAll(".operator");
+
+// event listener to get the operator
+operatorButtons.forEach(button => {
+    button.addEventListener("click", () =>{
+        num1 = parseInt(currentInput);
+        operator = button.textContent;
+        currentInput = "";
+        display.textContent = `${num1} ${operator}`;
+        console.log(button.textContent);
+    })
+})
