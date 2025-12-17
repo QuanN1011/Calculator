@@ -1,6 +1,7 @@
 let num1 = null;
 let num2 = null;
 let operator = null;
+let justCalculated = false;
 
 
 // four basic operations
@@ -42,9 +43,14 @@ let currentInput = "";
 
 // function to update display when user click on digits
 function updateDisplay(digit){
-    currentInput += digit;
+    if(justCalculated){
+        currentInput = digit;
+        justCalculated = false;
+    }
+    else{
+        currentInput += digit;
+    }
     display.textContent = currentInput;
-
 }
 
 // add event listener to get digit
@@ -62,7 +68,20 @@ const operatorButtons = document.querySelectorAll(".operator");
 // 12 + 7 - 1 = 12 + 7 = 19 - 1 = 18
 operatorButtons.forEach(button => {
     button.addEventListener("click", () =>{
-        if (operator !== null && currentInput !== ""){
+        if (operator === '/' && parseFloat(currentInput) === 0){ // if trying to divide by 0
+            display.textContent = "Can't divide by 0";
+            num1 = null;
+            num2 = null;
+            operator = null;
+            currentInput = "";
+            return;
+        }
+        // if user press operator twice, current input is "" just get the operator and do nothing
+        if (currentInput === ""){
+            operator = button.textContent;
+            return;
+        }
+        if (operator !== null){
             num2 = parseFloat(currentInput);
             let result = operate(num1, num2, operator);
             if(!(Number.isInteger(result))){        // round decimals if neccesary
@@ -71,6 +90,7 @@ operatorButtons.forEach(button => {
             result = parseFloat(result);
             display.textContent = result;
             num1 = result;
+            justCalculated = true;
             operator = button.textContent;
             currentInput = "";
         }
@@ -88,7 +108,15 @@ const equalButton = document.getElementById('equal');
 const clearButton = document.getElementById('clear');
 
 equalButton.addEventListener("click", () => {
-    if(num1 === null || operator === null || currentInput === null){
+    if(num1 === null || operator === null || currentInput === null){ // check if it's valid to click =
+        return;
+    }
+    if (operator === '/' && parseFloat(currentInput) === 0){ // if trying to divide by 0
+        display.textContent = "Can't divide by 0";
+        num1 = null;
+        num2 = null;
+        operator = null;
+        currentInput = "";
         return;
     }
     num2 = parseFloat(currentInput);
@@ -99,6 +127,7 @@ equalButton.addEventListener("click", () => {
     result = parseFloat(result);
     display.textContent = result;
     currentInput = result;
+    justCalculated = true;
     num1 = result;
     num2 = null;
     operator = null;
