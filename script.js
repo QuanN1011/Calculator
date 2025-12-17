@@ -164,5 +164,21 @@ signButton.addEventListener("click", () => {
     else{
         currentInput = '-' + currentInput;
     }
-    display.textContent = currentInput
+    display.textContent = currentInput;
+})
+
+// add button for decimal
+const decimalButton = document.getElementById('decimal');
+decimalButton.addEventListener("click", () =>{
+    if (currentInput.includes('.')){
+        return;
+    }
+    // if empty
+    if (currentInput === ""){
+        currentInput = "0.";
+    }
+    else{
+        currentInput += ".";
+    }
+    display.textContent = currentInput;
 })
