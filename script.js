@@ -63,15 +63,19 @@ const operatorButtons = document.querySelectorAll(".operator");
 operatorButtons.forEach(button => {
     button.addEventListener("click", () =>{
         if (operator !== null && currentInput !== ""){
-            num2 = parseInt(currentInput);
-            const result = operate(num1, num2, operator);
+            num2 = parseFloat(currentInput);
+            let result = operate(num1, num2, operator);
+            if(!(Number.isInteger(result))){        // round decimals if neccesary
+                result = result.toFixed(5);
+            }
+            result = parseFloat(result);
             display.textContent = result;
             num1 = result;
             operator = button.textContent;
             currentInput = "";
         }
         else{
-            num1 = parseInt(currentInput);
+            num1 = parseFloat(currentInput);
             operator = button.textContent;
             currentInput = "";
             console.log(button.textContent);
@@ -84,10 +88,20 @@ const equalButton = document.getElementById('equal');
 const clearButton = document.getElementById('clear');
 
 equalButton.addEventListener("click", () => {
-    num2 = parseInt(currentInput);
-    const result = operate(num1, num2, operator);
+    if(num1 === null || operator === null || currentInput === null){
+        return;
+    }
+    num2 = parseFloat(currentInput);
+    let result = operate(num1, num2, operator);
+    if(!(Number.isInteger(result))){        // round decimals if neccesary
+                result = result.toFixed(5);
+    }
+    result = parseFloat(result);
     display.textContent = result;
     currentInput = result;
+    num1 = result;
+    num2 = null;
+    operator = null;
 })
 
 clearButton.addEventListener("click", () => {
