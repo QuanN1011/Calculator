@@ -67,3 +67,15 @@ button:active {
     background: #b71c1c;
     color: #fff;
 }
+#backspace{
+    background: rgb(228, 68, 44);
+    color: white;
+}
+#sign{
+    background: rgb(198, 27, 164);
+    color: white;
+}
+#decimal{
+    background: #0d47a1;
+    color: #fff;
+}

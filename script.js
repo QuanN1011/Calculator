@@ -20,6 +20,9 @@ function divide (a, b) {
     }
     return a / b;
 }
+function modulus(a, b){
+    return a % b;
+}
 
 // function to call correct operation
 function operate(a, b, op) {
@@ -32,6 +35,8 @@ function operate(a, b, op) {
             return multiply(a, b);
         case '/':
             return divide(a, b);
+        case '%':
+            return modulus(a, b);
         default:
             throw new Error("Invalid operator");
     }
@@ -139,4 +144,25 @@ clearButton.addEventListener("click", () => {
     operator = null;
     currentInput = "";
     display.textContent = "";
+})
+
+// added backspace button to delete
+const backspaceButton = document.getElementById('backspace');
+
+backspaceButton.addEventListener("click", () => {
+    currentInput = currentInput.slice(0, -1); // -1 = string.length -1
+    display.textContent = currentInput;
+})
+
+// add button to switch between signs
+const signButton = document.getElementById('sign');
+
+signButton.addEventListener("click", () => {
+    if(currentInput.startsWith('-')){
+        currentInput = currentInput.slice(1);
+    }
+    else{
+        currentInput = '-' + currentInput;
+    }
+    display.textContent = currentInput
 })
