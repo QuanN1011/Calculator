@@ -182,3 +182,5 @@ decimalButton.addEventListener("click", () =>{
     }
     display.textContent = currentInput;
 })
+
+
